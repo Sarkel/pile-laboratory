@@ -10,6 +10,10 @@ __author__ = 'Sebastian Kubalski'
 class ApplicationMgr:
     #constructor
     def __init__(self):
+        self._result = None
+
+    #method run entire logic
+    def run(self):
         try:
             fileName = InputValidator.inputParamValidator(sys.argv)
             reader = InputReader(fileName)
@@ -19,6 +23,7 @@ class ApplicationMgr:
             InputValidator.inputTypeValidator(reader.getInputData())
             integralEngine = TrIntegrator(reader.getInputData())
             self._result = integralEngine.integrate()
+            self._printResults()
         except KeyboardInterrupt:
             print('Program has been stopped')
         except CustomException as e:
@@ -26,6 +31,7 @@ class ApplicationMgr:
         except Exception:
             print("Something went wrong")
 
+
     #printing results of calculating integral
-    def printResults(self):
+    def _printResults(self):
         print('Result: ' + str(self._result))
