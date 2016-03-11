@@ -1,5 +1,3 @@
-#from lab1.scipy.integrate import trapz
-
 __author__ = 'Sebastian Kubalski'
 
 #Engine class for integration
@@ -21,12 +19,6 @@ class TrIntegrator:
             integral += self._function(currentValue + h * n)
             integral += self._function(currentValue + h * (n + 1))
         return (h / 2) * integral
-
-    #def scipyIntegral(self):
-    #    h = (self.last - self.first) / self.numberOfDivisions
-    #    xes = []
-    #    y = [self._function(x) for x in xes]
-    #    return trapz(y, xes, h)
 
     #method to return value of polynomial
     def _function(self, value):
