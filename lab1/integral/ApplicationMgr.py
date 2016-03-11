@@ -23,6 +23,8 @@ class ApplicationMgr:
             print('Program has been stopped')
         except CustomException as e:
             print(e.msg)
+        except Exception:
+            print("Something went wrong")
 
     #printing results of calculating integral
     def printResults(self):
