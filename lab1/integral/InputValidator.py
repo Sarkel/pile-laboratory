@@ -39,3 +39,5 @@ class InputValidator:
         for key in filter(lambda x: x not in ('params', 'numberOfDivisions'), InputValidator._keys):
             if (type(inputData[key]) is not int) and (type(inputData[key]) is not float):
                 raise CustomException(str(key) + ' should be integer or float')
+        if inputData['first'] >= inputData['last']:
+            raise CustomException('First should be lower then last')
