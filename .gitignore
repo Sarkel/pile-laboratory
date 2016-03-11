@@ -60,3 +60,9 @@ target/
 
 #Ipython Notebook
 .ipynb_checkpoints
+
+#PyCarm
+.idea/
+lab1/scipy/
+*.whl
+*.zip
