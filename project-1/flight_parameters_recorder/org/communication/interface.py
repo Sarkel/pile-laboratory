@@ -1,12 +1,12 @@
 import random
 import requests
 from org.validators.interface import Interface as Validator
-from org.wrappers.flight import FlightData as Wrapper
+from org.wrappers.flight import FlightDataWrapper as Wrapper
 
 __author__ = "Sebastian Kubalski"
 
 
-class Interface:
+class Interface(object):
     def __init__(self) -> None:
         self._url = 'https://data.flightradar24.com/zones/fcgi/feed.js'
         objects = self._request()
@@ -21,5 +21,5 @@ class Interface:
 
     def _request(self) -> dict:
         response = requests.get(self._url)
-        Validator.isResponseCorrect(response.status_code)
+        #Validator.isResponseCorrect(response.status_code)
         return Validator.isResponseCorrectFormatted(response)

@@ -1,7 +1,10 @@
+from typing import Sequence
+from org.wrappers.basicwrapper import BasicWrapper
+
 __author__ = "Sebastian Kubalski"
 
 
-class FlightData:
+class FlightDataWrapper(BasicWrapper):
     def __init__(self, key: str, observed: list) -> None:
         self.id = key
         self.latitude = observed[1]
@@ -12,8 +15,6 @@ class FlightData:
         self.speed = observed[5]
         self.time = observed[10]
 
-    def keys(self):
+    @staticmethod
+    def keys() -> Sequence[str]:
         return ['id', 'latitude', 'longitude', 'altitude', 'start', 'destination', 'speed', 'time']
-
-    def __getitem__(self, item: str):
-        return getattr(self, item)

@@ -4,7 +4,7 @@ from org.exceptions.flight import FlightException
 __author__ = "Sebastian Kubalski"
 
 
-class Interface:
+class Interface(object):
     @staticmethod
     def observedObjectStillExists(response: dict, index: str) -> list:
         if index in response:

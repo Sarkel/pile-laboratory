@@ -1,12 +1,12 @@
 import sqlite3
 from typing import Sequence
-from org.wrappers.flight import FlightData
+from org.wrappers.flight import FlightDataWrapper
+from org.wrappers.parameters import ParametersWrapper
 
 __author__ = "Sebastian Kubalski"
 
 
-class Base:
-    #constructor
+class Base(object):
     def __init__(self, path: str) -> None:
         self._db = sqlite3.connect(path)
         self._db.isolation_level = None
@@ -35,10 +35,10 @@ class Base:
         self._cur.execute('DROP TABLE Parameters;')
 
     def select(self) -> Sequence[dict]:
-        self._cur.execute('SELECT * FROM Parameters')
-        return self._cur.fetchall()
+        self._cur.execute('SELECT * FROM Parameters;')
+        return [ParametersWrapper(element) for element in self._cur.fetchall()]
 
-    def insert(self, observed: FlightData) -> None:
+    def insert(self, observed: FlightDataWrapper) -> None:
         statement = '''
             INSERT INTO Parameters(
               flight_id,
@@ -49,6 +49,6 @@ class Base:
               destination,
               speed,
               time)
-            VALUES(?, ?, ?, ?, ?, ?, ?, ?)
+            VALUES(?, ?, ?, ?, ?, ?, ?, ?);
         '''
-        self._cur.execute(statement, tuple([observed[name] for name in observed.keys()]))
+        self._cur.execute(statement, tuple([observed[name] for name in FlightDataWrapper.keys()]))
