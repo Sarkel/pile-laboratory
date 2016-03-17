@@ -34,8 +34,11 @@ class Base(object):
     def dropTable(self) -> None:
         self._cur.execute('DROP TABLE Parameters;')
 
-    def select(self) -> Sequence[dict]:
-        self._cur.execute('SELECT * FROM Parameters;')
+    def select(self, params: tuple=None) -> Sequence[dict]:
+        if params:
+            self._cur.execute('SELECT * FROM Parameters WHERE id IN (?);', (params))
+        else:
+            self._cur.execute('SELECT * FROM Parameters;')
         return [ParametersWrapper(element) for element in self._cur.fetchall()]
 
     def insert(self, observed: FlightDataWrapper) -> None:
