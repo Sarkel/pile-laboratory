@@ -1,7 +1,8 @@
 import random
 import requests
-from org.validators.interface import Interface as Validator
-from org.wrappers.flight import FlightDataWrapper as Wrapper
+
+from org.engine.validators.interface import Interface as Validator
+from org.engine.wrappers.flight import FlightDataWrapper as Wrapper
 
 __author__ = "Sebastian Kubalski"
 
@@ -21,5 +22,4 @@ class Interface(object):
 
     def _request(self) -> dict:
         response = requests.get(self._url)
-        #Validator.isResponseCorrect(response.status_code)
         return Validator.isResponseCorrectFormatted(response)

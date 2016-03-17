@@ -1,14 +1,15 @@
-import sqlite3
+from sqlite3 import connect
 from typing import Sequence
-from org.wrappers.flight import FlightDataWrapper
-from org.wrappers.parameters import ParametersWrapper
+
+from org.engine.wrappers.flight import FlightDataWrapper
+from org.engine.wrappers.parameters import ParametersWrapper
 
 __author__ = "Sebastian Kubalski"
 
 
 class Base(object):
     def __init__(self, path: str) -> None:
-        self._db = sqlite3.connect(path)
+        self._db = connect(path)
         self._db.isolation_level = None
         self._cur = self._db.cursor()
 

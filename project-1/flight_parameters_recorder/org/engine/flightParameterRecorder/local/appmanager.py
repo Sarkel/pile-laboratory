@@ -1,24 +1,37 @@
-from threading import BoundedSemaphore
+from threading import BoundedSemaphore, Thread
 from threading import enumerate as threadsList
 from time import sleep
-from org.communication.interface import Interface
-from org.exceptions.flight import FlightException
-from org.exceptions.scheduler import SchedulerException
-from org.flightParameterRecorder.local.base import Base
-from org.flightParameterRecorder.local.scheduler import Scheduler
+
+from org.engine.communication.interface import Interface
+from org.engine.exceptions.flight import FlightException
+from org.engine.exceptions.scheduler import SchedulerException
+from org.engine.flightParameterRecorder.local.base import Base
+from org.engine.flightParameterRecorder.local.communication import Communication
+from org.engine.flightParameterRecorder.local.scheduler import Scheduler
 
 __author__ = "Sebastian Kubalski"
 
 
 class AppManager(object):
     @staticmethod
-    def initialize() -> None:
+    def _synchronize():
+        Communication()
+
+    @staticmethod
+    def run():
+        AppManager._initialize()
+        AppManager._schedule()
+        AppManager._synchronize()
+
+    @staticmethod
+    def _initialize() -> None:
         conn = Base('./test.db')
         conn.createTable()
         conn.close()
 
     @staticmethod
-    def schedule() -> None:
+    def _schedule() -> None:
+        def fun(x: Thread): ('Communication Thread' not in x.getName()) and (x.getName() is not 'MainThread')
         maxNumberOfThreads = 3
         time = 5
         with BoundedSemaphore(maxNumberOfThreads):
@@ -26,7 +39,7 @@ class AppManager(object):
             try:
                 while True:
                     threads = []
-                    activeThreads = len([x for x in threadsList() if x.getName() is not 'Communication Thread'])
+                    activeThreads = len([x for x in threadsList() if fun(x)])
                     if activeThreads < maxNumberOfThreads + 1:
                         threads.append(AppManager._executeRequest(activeThreads, interface, './test.db'))
                     else:
@@ -46,4 +59,3 @@ class AppManager(object):
         thread = Scheduler('Thread: ' + str(activeThreads + 1), interface, db)
         thread.start()
         return thread
-

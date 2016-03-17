@@ -1,5 +1,5 @@
 from typing import Sequence
-from org.wrappers.basicwrapper import BasicWrapper
+from org.engine.wrappers.basicwrapper import BasicWrapper
 
 __author__ = "Sebastian Kubalski"
 

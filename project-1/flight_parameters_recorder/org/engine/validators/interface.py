@@ -1,5 +1,5 @@
 import requests
-from org.exceptions.flight import FlightException
+from org.engine.exceptions.flight import FlightException
 
 __author__ = "Sebastian Kubalski"
 

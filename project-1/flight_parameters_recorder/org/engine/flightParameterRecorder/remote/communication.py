@@ -1,5 +1,5 @@
 from typing import Sequence
-from org.flightParameterRecorder.remote.base import Base
+from org.engine.flightParameterRecorder.remote.base import Base
 
 __author__ = "Sebastian Kubalski"
 
